@@ -28,4 +28,5 @@ Router.delete("/category/del", async (request, response) => {
   response.status(200).send({ data: deletedCategory });
 });
 
-module.exports = Router;
+// module.exports = Router;
+export default Router;
