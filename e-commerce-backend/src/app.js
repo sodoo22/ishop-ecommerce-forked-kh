@@ -3,20 +3,23 @@ console.log("iShop E-Commerce Backend");
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import menuApi from "./routes/menu-api";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+import authApi from "./routes/auth-api";
 import adminApi from "./routes/admin-api";
 import Router from "./routes/menu-api";
 
 const app = express();
-const PORT = 8080;
-const MONGODB_CONNECTION_STRING =
-  "mongodb+srv://Sodgerel:JfA7fHMQlxhrap5m@test.jed1udq.mongodb.net/ishop";
+const PORT = process.env.PORT;
+const MONGODB_CONNECTION_STRING = process.env.MONGODB_URL;
 
 app.use(cors());
 app.use(express.json());
 // app.use("/menu", menuApi);
 app.use("/menu", Router);
 app.use("/admin", adminApi);
+app.use("/auth", authApi);
 
 app.listen(PORT, () => {
   mongoose

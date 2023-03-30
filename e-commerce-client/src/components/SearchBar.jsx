@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { LoginContext } from "../context/login-provider";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar(props) {
+  const { login, setLogin } = useContext(LoginContext);
+  console.log(login);
+
+  const signOut = () => {
+    localStorage.removeItem("token");
+    setLogin(false);
+  };
+
   const [showWish, setShowWish] = useState(false);
   const [showBasket, setShowBasket] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -87,7 +97,13 @@ export default function SearchBar(props) {
             <div className="signin">
               <i className="bi bi-person"></i>
               <span className="space"> </span>
-              <Link to={"/signup"}>Sign in</Link>
+
+              {login ? (
+                <Link onClick={signOut}>Sign Out</Link>
+              ) : (
+                <Link to={"/login"}>Login</Link>
+              )}
+              {/* <button onClick={signOut}>{login ? "Sign Out" : "Login"}</button> */}
             </div>
             <div className="favorite">
               <i
